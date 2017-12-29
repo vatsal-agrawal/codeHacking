@@ -48,17 +48,22 @@
           @if (count($comment)>0)
           @foreach ($comment as $item)
           @if ($item->is_active == 1)
-          <div class="media mb-4">
+
+          <div class="media mb-4" >
+            
             <img height = '50' class="d-flex mr-3 rounded-circle" src="/codeHacking/public/images/{{$post->user->photo->photo}}" alt="">
-            <div class="media-body">
+            <div class="media-body ">
+            
               <h5 class="mt-0">{{$item->author}}</h5>
               {{$item->body}}  
               @if (count($item->commentReplies)>0)
               @foreach ($item->commentReplies as $replies)
               @if ($replies->is_active == 1)
+              {{--  <button class = 'btn btn-primary float-right flip'>Reply</button>     --}}
+              {{--  work on jquery  --}}
               <div class="media mt-4">
                 <img height = '50' class="d-flex mr-3 rounded-circle" src="/codeHacking/public/images/{{$replies->comment->post->user->photo->photo}}" alt="">
-                <div class="media-body">
+                <div class="media-body" id='flip'>
                   <h5 class="mt-0">{{$replies->author}}</h5>
                 {{$replies->body}} 
                 </div>
@@ -66,7 +71,9 @@
               @endif              
               @endforeach    
               @endif
-             
+
+              
+              <div class = 'panel'>
               <form action= {{route('replies.store')}} method='POST'>
                 {{csrf_field()}}
                 <input type = 'hidden' name = 'comment_id' value = {{$item->id}}>
@@ -76,7 +83,7 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
-
+            </div>
         </div>
       </div>
          
@@ -87,4 +94,16 @@
           @endif
 
 @endsection
+
+@section('jquery')
+<script src = '"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
+  $(document).ready(function(){
+  $(".flip").click(function(){
+      $(".media mt-4.panel").slideDown("slow");
+  });
+});
+</script>  
+@endsection
+
+
           

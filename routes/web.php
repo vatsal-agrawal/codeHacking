@@ -18,14 +18,14 @@ Route::get('/', function () {
 
 Route::get('/post/{id}','AdminPostsController@post')->name('post');
 
+Route::get('/admin', function () {
+    return view('admin.index');
+});
 
 
 
 Route::group(['middleware'=>'admin'],function(){
 
-Route::get('/admin', function () {
-    return view('admin.index');
-});
 
 Route::resource('/admin/categories','AdminCategoriesController');
     
