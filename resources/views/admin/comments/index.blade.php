@@ -23,6 +23,7 @@
             <td>{{$item->body}}</td>
             <td>{{$item->created_at->diffforhumans()}}</td>
             <td>{{$item->updated_at->diffforhumans()}}</td>
+            <td><a href = {{route('replies.show',[$item->id])}}>View Replies</a></td>
             <td>
                 @if($item->is_active == 1)
             <form action = "{{route('comments.update',[$item->id])}}" method="POST">

@@ -53,41 +53,38 @@
             <div class="media-body">
               <h5 class="mt-0">{{$item->author}}</h5>
               {{$item->body}}  
-            </div>
-          </div> 
-          @endif
+              @if (count($item->commentReplies)>0)
+              @foreach ($item->commentReplies as $replies)
+              @if ($replies->is_active == 1)
+              <div class="media mt-4">
+                <img height = '50' class="d-flex mr-3 rounded-circle" src="/codeHacking/public/images/{{$replies->comment->post->user->photo->photo}}" alt="">
+                <div class="media-body">
+                  <h5 class="mt-0">{{$replies->author}}</h5>
+                {{$replies->body}} 
+                </div>
+              </div>    
+              @endif              
+              @endforeach    
+              @endif
+             
+              <form action= {{route('replies.store')}} method='POST'>
+                {{csrf_field()}}
+                <input type = 'hidden' name = 'comment_id' value = {{$item->id}}>
+                
+                <div class="form-group">
+                  <textarea class="form-control" rows="1" name='body'></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+
+        </div>
+      </div>
          
+          @endif
+
           @endforeach
          
           @endif
 
-         
-
-          <!-- Comment with nested comments -->
-          <div class="media mb-4">
-            <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-            <div class="media-body">
-              <h5 class="mt-0">Commenter Name</h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
-              <div class="media mt-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                  <h5 class="mt-0">Commenter Name</h5>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-              </div>
-
-              <div class="media mt-4">
-                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-                <div class="media-body">
-                  <h5 class="mt-0">Commenter Name</h5>
-                  Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                </div>
-              </div>
-
-            </div>
-          </div>
-    
 @endsection
           
